@@ -12,8 +12,6 @@ struct topic_entry {
     int mastery;
 
     // ------------------- //
-
-    // Конструктор по умолчанию
     topic_entry() = default;
 
     topic_entry(const std::string& p, const std::string& t, int m, const std::string& n, const std::string& ts)
