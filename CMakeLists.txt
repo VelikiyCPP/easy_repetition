@@ -1,21 +1,42 @@
+# CMakeLists.txt
 cmake_minimum_required(VERSION 3.14)
-project(NotcursesApp CXX)
+project(rlog CXX)
 
-set(CMAKE_CXX_COMPILER "clang++")
-set(CMAKE_CXX_STANDARD 17)
+# Требуем C++23
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(NOTCURSES REQUIRED notcurses)
+# По умолчанию — более строгие предупреждения
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
 
-set(SOURCES
-    src/source.cpp
-    src/InputHandler.cpp
-    src/Renderer.cpp
+# Указываем, где искать заголовочные файлы
+include_directories(
+    src
+    src/common
+    src/core
+    src/interface
+    src/io
+    src/storage
+    # Поддержка nlohmann/json без установки (если лежит в include/json/)
+    include
 )
 
-add_executable(source ${SOURCES})
+# Список всех исходников
+set(SOURCES
+    src/main.cpp
+    src/core/rlog_core.cpp
+    src/storage/json_topic_storage.cpp
+    # сюда можно добавить io/console_io.cpp, если будешь использовать
+)
 
-target_include_directories(source PRIVATE include ${NOTCURSES_INCLUDE_DIRS})
-target_link_libraries(source ${NOTCURSES_LIBRARIES})
-target_link_options(source PRIVATE ${NOTCURSES_LDFLAGS})
+# Создаём исполняемый файл
+add_executable(rlog ${SOURCES})
+
+# Если используешь nlohmann/json как header-only (что вероятно)
+# Положи json.hpp в: include/nlohmann/json.hpp
+# Тогда ничего дополнительно линковать не нужно.
+
+# Опционально: установка
+install(TARGETS rlog DESTINATION bin)
