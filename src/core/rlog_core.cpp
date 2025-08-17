@@ -1,4 +1,3 @@
-// core/rlog_core.cpp
 #include "rlog_core.hpp"
 #include <iostream>
 #include <stdexcept>
@@ -66,7 +65,6 @@ void rlog_core::list() {
               << "\n";
 }
 
-// Заглушки
 void rlog_core::remove() {
     std::cerr << "remove: не реализовано\n";
 }
