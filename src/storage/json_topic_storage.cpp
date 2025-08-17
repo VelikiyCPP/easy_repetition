@@ -1,4 +1,3 @@
-// storage/json_topic_storage.cpp
 #include "json_topic_storage.hpp"
 #include <fstream>
 #include <iomanip>
@@ -76,7 +75,6 @@ bool Json_topic_storage::add_entry(const topic_entry& entry) {
     return true; // TODO: позже вернуться сюда
 }
 
-// Получить все записи
 std::vector<topic_entry> Json_topic_storage::get_entries() const {
     std::vector<topic_entry> entries;
 
@@ -111,12 +109,10 @@ bool Json_topic_storage::save(std::string name) {
     }
 }
 
-// Проверить, существует ли файл
 bool Json_topic_storage::exists() const {
     return std::filesystem::exists(file_path_);
 }
 
-// Вернуть путь к файлу как строку
 std::string Json_topic_storage::path() const noexcept {
     return file_path_;
 }
